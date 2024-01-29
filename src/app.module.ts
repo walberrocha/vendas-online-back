@@ -2,7 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { typeOrmConfig } from './configs/typeorm.config';
+import path from 'node:path';
+import { UserEntity } from './user/interfaces/user.entity';
 
 @Module({
   imports: [
@@ -11,16 +12,16 @@ import { typeOrmConfig } from './configs/typeorm.config';
     }),
     TypeOrmModule.forRoot(
       {
-      database: process.env.DB_DATABASE,
-      host: process.env.DB_HOST,
-      password: process.env.DB_PASSWORD,
-      port: 5432,
-      username: process.env.DB_USERNAME,
-      type: 'postgres',
-      entities: ['${__dirname}/../**/*.entity{.js,.ts}'],
-      synchronize: true,
-      logging: true,
-    }),
+        type: 'postgres',
+        host: process.env.DB_HOST,
+        port: Number(process.env.DB_PORT),
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE,
+        entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
+        migrations: [`${__dirname}/migration/{.ts,*.js}`],
+        migrationsRun: true,
+      }),
     UserModule,
   ],
   controllers: [],
