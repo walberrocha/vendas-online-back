@@ -12,16 +12,13 @@ export class AddressEntity {
   email: string;
 
   @Column({ name: 'number', nullable: false })
-  numberAddress: string;
+  numberAddress: number;
 
   @Column({ name: 'cep', nullable: false })
   cep: string;
 
   @Column({ name: 'city_id', nullable: false })
-  cityId: string;
-  
-  @Column({ name: 'type_user', nullable: false })
-  typeUser: number;
+  cityId: number;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
